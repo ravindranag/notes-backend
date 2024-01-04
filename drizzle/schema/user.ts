@@ -10,7 +10,7 @@ export const userTable = pgTable('user', {
 	name: text('name').notNull()
 })
 
-export const userToNoteRelation = relations(userTable, ({many}) => ({
+export const userToNoteRelation = relations(userTable, ({ many }) => ({
 	notes: many(noteTable)
 }))
 

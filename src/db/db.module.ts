@@ -2,12 +2,13 @@ import { Module } from '@nestjs/common';
 import postgres from 'postgres';
 import { PostgresJsDatabase, drizzle } from 'drizzle-orm/postgres-js'
 import * as userSchema from '../../drizzle/schema/user'
-
+import * as noteSchema from '../../drizzle/schema/note'
 
 export const DbProvider = 'DbProvider'
 
 const schema = {
-	...userSchema
+	...userSchema,
+	...noteSchema
 }
 
 export type DbClient = PostgresJsDatabase<typeof schema>
