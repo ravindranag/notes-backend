@@ -4,6 +4,7 @@ import { text } from "drizzle-orm/pg-core";
 import { pgTable } from "drizzle-orm/pg-core";
 import { userTable } from "./user";
 import { relations } from "drizzle-orm";
+import { sharedNotesTable } from "./sharedNote";
 
 export const noteTable = pgTable('note', {
 	id: text('id').primaryKey().$defaultFn(() => createId()),
@@ -27,6 +28,10 @@ export const noteToUserRelation = relations(noteTable, ({ one }) => ({
 		fields: [noteTable.authorId],
 		references: [userTable.id]
 	})
+}))
+
+export const noteToSharedNotesRelation = relations(noteTable, ({ many }) => ({
+	shares: many(sharedNotesTable)
 }))
 
 export type Note = typeof noteTable.$inferSelect

@@ -2,6 +2,7 @@ import { createId } from "@paralleldrive/cuid2";
 import { relations } from "drizzle-orm";
 import { pgTable, text } from "drizzle-orm/pg-core";
 import { noteTable } from "./note";
+import { sharedNotesTable } from "./sharedNote";
 
 export const userTable = pgTable('user', {
 	id: text('id').primaryKey().$defaultFn(() => createId()),
@@ -12,6 +13,10 @@ export const userTable = pgTable('user', {
 
 export const userToNoteRelation = relations(userTable, ({ many }) => ({
 	notes: many(noteTable)
+}))
+
+export const userToSharedNotesRelation = relations(userTable, ({ many }) => ({
+	sharedNotes: many(sharedNotesTable)
 }))
 
 export type CreateUser = typeof userTable.$inferInsert

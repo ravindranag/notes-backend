@@ -2,7 +2,7 @@ import { Body, Controller, Delete, Get, Param, Post, Put, Query, Req, UseGuards 
 import { NoteService } from './note.service';
 import { JwtGuard } from 'src/auth/jwt/jwt.guard';
 import { Request } from 'express';
-import { CreateNoteDto, UpdateNoteDto } from './note.dto';
+import { CreateNoteDto, ShareNoteWithUserDto, UpdateNoteDto } from './note.dto';
 
 @Controller('notes')
 export class NoteController {
@@ -38,6 +38,12 @@ export class NoteController {
 	@UseGuards(JwtGuard)
 	deleteNoteById(@Req() req: Request, @Param('noteId') noteId: string) {
 		return this.noteService.deleteNote(noteId, req.user.id)
+	}
+
+	@Post(':noteId/share')
+	@UseGuards(JwtGuard)
+	shareNoteWithAnotherUser(@Req() req: Request, @Param('noteId') noteId: string, @Body() data: ShareNoteWithUserDto) {
+		return this.noteService.shareNoteWithUser(noteId, req.user.id, data.userList)
 	}
 	
 }

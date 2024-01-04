@@ -1,14 +1,19 @@
-import { BadRequestException, Inject, Injectable } from '@nestjs/common';
-import { and, eq } from 'drizzle-orm';
+import { BadRequestException, Inject, Injectable, UnauthorizedException } from '@nestjs/common';
+import { and, eq, or, sql } from 'drizzle-orm';
 import { CreateNote, noteTable } from 'drizzle/schema/note';
 import { DbClient, DbProvider } from 'src/db/db.module';
 import { CreateNoteDto, UpdateNoteDto } from './note.dto';
+import { sharedNotesTable } from 'drizzle/schema/sharedNote';
 
 @Injectable()
 export class NoteService {
 	constructor(
 		@Inject(DbProvider) private readonly db: DbClient
 	) { }
+
+	isNoteOwner(noteId: string, userId: string) {
+
+	}
 
 	notesByUser(userId: string) {
 		return this.db.select().from(noteTable).where(eq(noteTable.authorId, userId))
@@ -56,5 +61,41 @@ export class NoteService {
 		catch (e) {
 			throw new BadRequestException('Cannot delete note')
 		}
+	}
+
+	async shareNoteWithUser(noteId: string, authorId: string, userIdList: string[]) {
+		const note = await this.noteById(noteId, authorId)
+
+		if (!note) {
+			throw new UnauthorizedException('Only author is allowed to share this note.')
+		}
+
+		try {
+
+			await this.db.insert(sharedNotesTable).values(userIdList.map((userId) => ({
+				noteId: noteId,
+				userId
+			})))
+
+			return {
+				message: 'Note shared with user successfully.'
+			}
+		}
+		catch (e) {
+			throw new BadRequestException('Failed to shared note with user.')
+		}
+	}
+
+	searchNoteByTitleContent(query: string, userId: string) {
+		return this.db
+			.select()
+			.from(noteTable)
+			.where(and(
+				eq(noteTable.authorId, userId),
+				or(
+					sql`to_tsvector('simple', ${noteTable.title}) @@ to_tsquery('simple', ${query})`,
+					sql`to_tsvector('simple', ${noteTable.content}) @@ to_tsquery('simple', ${query})`,
+				)
+			))
 	}
 }

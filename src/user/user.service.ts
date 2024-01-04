@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { eq } from 'drizzle-orm';
+import { eq, sql } from 'drizzle-orm';
 import { userTable } from 'drizzle/schema/user';
 import { DbClient, DbProvider } from 'src/db/db.module';
 
@@ -19,5 +19,16 @@ export class UserService {
 			name: userTable.name,
 			email: userTable.email
 		}).from(userTable).where(eq(userTable.id, id)).limit(1)
+	}
+
+	searchUserByName(query: string, page: number, limit: number) {
+		return this.db.select({
+			id: userTable.id,
+			name: userTable.name
+		})
+			.from(userTable)
+			.where(sql`to_tsvector('simple', ${userTable.name}) @@ to_tsquery('simple', ${query})`)
+			.limit(limit)
+			.offset((page - 1) * limit)
 	}
 }

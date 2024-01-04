@@ -1,6 +1,6 @@
 {
-  "id": "ebe1ac76-4d0f-4dd9-859f-de79db1cc91e",
-  "prevId": "66c82d40-9411-4741-8530-2357c18518d4",
+  "id": "66c82d40-9411-4741-8530-2357c18518d4",
+  "prevId": "d583c162-8bf1-4712-b3f7-fa485826926b",
   "version": "5",
   "dialect": "pg",
   "tables": {
@@ -65,63 +65,6 @@
         }
       },
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {}
-    },
-    "sharedNotes": {
-      "name": "sharedNotes",
-      "schema": "",
-      "columns": {
-        "noteId": {
-          "name": "noteId",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "userId": {
-          "name": "userId",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {
-        "sharedNotes_noteId_note_id_fk": {
-          "name": "sharedNotes_noteId_note_id_fk",
-          "tableFrom": "sharedNotes",
-          "tableTo": "note",
-          "columnsFrom": [
-            "noteId"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        },
-        "sharedNotes_userId_user_id_fk": {
-          "name": "sharedNotes_userId_user_id_fk",
-          "tableFrom": "sharedNotes",
-          "tableTo": "user",
-          "columnsFrom": [
-            "userId"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        }
-      },
-      "compositePrimaryKeys": {
-        "sharedNotes_noteId_userId_pk": {
-          "name": "sharedNotes_noteId_userId_pk",
-          "columns": [
-            "noteId",
-            "userId"
-          ]
-        }
-      },
       "uniqueConstraints": {}
     },
     "user": {

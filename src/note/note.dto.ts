@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsOptional, IsString } from "class-validator";
+import { IsArray, IsNotEmpty, IsOptional, IsString } from "class-validator";
 
 export class UpdateNoteDto {
 	@IsString()
@@ -18,4 +18,10 @@ export class CreateNoteDto {
 	@IsString()
 	@IsNotEmpty()
 	content: string
+}
+
+export class ShareNoteWithUserDto {
+	@IsArray()
+	@IsNotEmpty()
+	userList: string[]
 }

@@ -13,6 +13,6 @@ import { UserModule } from 'src/user/user.module';
 	UserModule
   ],
   controllers: [NoteController],
-
+  exports: [NoteService]
 })
 export class NoteModule {}
