@@ -28,3 +28,6 @@ export const noteToUserRelation = relations(noteTable, ({ one }) => ({
 		references: [userTable.id]
 	})
 }))
+
+export type Note = typeof noteTable.$inferSelect
+export type CreateNote = typeof noteTable.$inferInsert
