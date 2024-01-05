@@ -1,10 +1,10 @@
 import { BadRequestException, Inject, Injectable, UnauthorizedException } from '@nestjs/common';
 import { hash, verify } from 'argon2';
 import { CreateUser, userTable } from '../../drizzle/schema/user';
-import { DbClient, DbProvider } from 'src/db/db.module';
 import { LoginDto } from './auth.dto';
 import { eq } from 'drizzle-orm';
 import { JwtService } from '@nestjs/jwt';
+import { DbProvider, DbClient } from '../db/db.module';
 
 @Injectable()
 export class AuthService {
@@ -41,6 +41,7 @@ export class AuthService {
 			}
 		}
 		catch (e) {
+			console.error(e)
 			throw new BadRequestException('User creation failed')
 		}
 	}

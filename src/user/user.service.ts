@@ -1,7 +1,8 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { eq, sql } from 'drizzle-orm';
-import { userTable } from 'drizzle/schema/user';
-import { DbClient, DbProvider } from 'src/db/db.module';
+import { userTable } from '../../drizzle/schema/user';
+import { DbProvider, DbClient } from '../db/db.module';
+
 
 @Injectable()
 export class UserService {

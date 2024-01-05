@@ -1,9 +1,9 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, Query, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Req, UseGuards } from '@nestjs/common';
 import { NoteService } from './note.service';
-import { JwtGuard } from 'src/auth/jwt/jwt.guard';
 import { Request } from 'express';
 import { CreateNoteDto, ShareNoteWithUserDto, UpdateNoteDto } from './note.dto';
 import { ThrottlerGuard } from '@nestjs/throttler';
+import { JwtGuard } from '../auth/jwt/jwt.guard';
 
 @UseGuards(ThrottlerGuard)
 @Controller('notes')

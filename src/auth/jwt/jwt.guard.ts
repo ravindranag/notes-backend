@@ -2,7 +2,8 @@ import { CanActivate, ExecutionContext, Injectable, UnauthorizedException } from
 import { JwtService } from '@nestjs/jwt';
 import { Request } from 'express';
 import { Observable } from 'rxjs';
-import { UserService } from 'src/user/user.service';
+import { UserService } from '../../user/user.service';
+
 
 type Payload = {
 	id: string

@@ -1,19 +1,15 @@
 import { BadRequestException, Inject, Injectable, UnauthorizedException } from '@nestjs/common';
 import { and, eq, or, sql } from 'drizzle-orm';
-import { CreateNote, noteTable } from 'drizzle/schema/note';
-import { DbClient, DbProvider } from 'src/db/db.module';
 import { CreateNoteDto, UpdateNoteDto } from './note.dto';
-import { sharedNotesTable } from 'drizzle/schema/sharedNote';
+import { noteTable } from '../../drizzle/schema/note';
+import { sharedNotesTable } from '../../drizzle/schema/sharedNote';
+import { DbProvider, DbClient } from '../db/db.module';
 
 @Injectable()
 export class NoteService {
 	constructor(
 		@Inject(DbProvider) private readonly db: DbClient
 	) { }
-
-	isNoteOwner(noteId: string, userId: string) {
-
-	}
 
 	notesByUser(userId: string) {
 		return this.db.select().from(noteTable).where(eq(noteTable.authorId, userId))

@@ -1,7 +1,7 @@
 import { Controller, Get, Query, UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
-import { JwtGuard } from 'src/auth/jwt/jwt.guard';
 import { ThrottlerGuard } from '@nestjs/throttler';
+import { JwtGuard } from '../auth/jwt/jwt.guard';
 
 @UseGuards(ThrottlerGuard)
 @Controller('user')
