@@ -3,7 +3,9 @@ import { AppService } from './app.service';
 import { JwtGuard } from './auth/jwt/jwt.guard';
 import { Request } from 'express';
 import { NoteService } from './note/note.service';
+import { ThrottlerGuard } from '@nestjs/throttler';
 
+@UseGuards(ThrottlerGuard)
 @Controller()
 export class AppController {
   constructor(

@@ -4,7 +4,9 @@ import { CreateUser } from '../../drizzle/schema/user';
 import { LoginDto } from './auth.dto';
 import { JwtGuard } from './jwt/jwt.guard';
 import { Request } from 'express';
+import { Throttle, ThrottlerGuard } from '@nestjs/throttler';
 
+@UseGuards(ThrottlerGuard)
 @Controller('auth')
 export class AuthController {
 	constructor(
@@ -21,6 +23,7 @@ export class AuthController {
 		return this.authService.verifyUserAndCreateToken(data)
 	}
 
+	
 	@Get('me')
 	@UseGuards(JwtGuard)
 	getCurrentUser(@Req() req: Request) {

@@ -6,6 +6,7 @@ import { DbModule } from './db/db.module';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 import { NoteModule } from './note/note.module';
+import { ThrottlerModule } from '@nestjs/throttler';
 
 @Module({
   imports: [
@@ -15,7 +16,11 @@ import { NoteModule } from './note/note.module';
 	DbModule,
 	AuthModule,
 	UserModule,
-	NoteModule
+	NoteModule,
+	ThrottlerModule.forRoot([{
+		ttl: 60_000,
+		limit: 60
+	}])
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -3,7 +3,9 @@ import { NoteService } from './note.service';
 import { JwtGuard } from 'src/auth/jwt/jwt.guard';
 import { Request } from 'express';
 import { CreateNoteDto, ShareNoteWithUserDto, UpdateNoteDto } from './note.dto';
+import { ThrottlerGuard } from '@nestjs/throttler';
 
+@UseGuards(ThrottlerGuard)
 @Controller('notes')
 export class NoteController {
 	constructor(
